@@ -25,8 +25,9 @@ load_dotenv()
 # --------------------------------------------------------------------------- #
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 MONGO_DB = os.getenv("MONGO_DB", "attendance_db")
+MONGO_TIMEOUT_MS = int(os.getenv("MONGO_TIMEOUT_MS", "3000"))
 
-client = MongoClient(MONGO_URI, tz_aware=True)
+client = MongoClient(MONGO_URI, tz_aware=True, serverSelectionTimeoutMS=MONGO_TIMEOUT_MS)
 db = client[MONGO_DB]
 
 IST = timezone(timedelta(hours=5, minutes=30))
