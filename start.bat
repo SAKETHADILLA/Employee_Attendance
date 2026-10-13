@@ -27,16 +27,18 @@ if exist venv\Scripts\activate.bat (
     call venv\Scripts\activate.bat
 )
 
-if not defined MONGO_URI (
-    set MONGO_URI=mongodb://localhost:27017
+if exist .env (
+    echo [*] Database Configuration: Loading from .env file
+) else (
+    if not defined MONGO_URI (
+        set MONGO_URI=mongodb://localhost:27017
+    )
+    if not defined MONGO_DB (
+        set MONGO_DB=attendance_db
+    )
+    echo [*] Target Database URI : %MONGO_URI%
+    echo [*] Database Name       : %MONGO_DB%
 )
-
-if not defined MONGO_DB (
-    set MONGO_DB=attendance_db
-)
-
-echo [*] Target Database URI : %MONGO_URI%
-echo [*] Database Name       : %MONGO_DB%
 echo [*] API Port            : 8000
 echo [*] Interactive Docs    : http://localhost:8000/docs
 echo [*] Health Check        : http://localhost:8000/health
